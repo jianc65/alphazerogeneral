@@ -1,6 +1,6 @@
 from Coach import Coach
-from othello.OthelloGame import OthelloGame as Game
-from othello.pytorch.NNet import NNetWrapper as nn
+from gobang.GobangGame import GobangGame as Game
+from gobang.tensorflow.NNet import NNetWrapper as nn
 from utils import *
 
 args = dotdict({
@@ -14,14 +14,14 @@ args = dotdict({
     'cpuct': 1,
 
     'checkpoint': './temp/',
-    'load_model': False,
-    'load_folder_file': ('/dev/models/8x100x50','best.pth.tar'),
+    'load_model': True,
+    'load_folder_file': ('./temp/','gobang_checkpoint_1.pth.tar'),
     'numItersForTrainExamplesHistory': 20,
 
 })
 
 if __name__=="__main__":
-    g = Game(6)
+    g = Game()
     nnet = nn(g)
 
     if args.load_model:
