@@ -143,6 +143,15 @@ class Coach():
             Pickler(f).dump(self.trainExamplesHistory)
         f.closed
 
+    def removePrevTrainingExamples(self, iteration):
+        #remove previous iteration as they are redundant and takes up disk spaces
+        folder = self.args.checkpoint
+        if not os.path.exists(folder):
+            return
+        filename = os.path.join(folder, self.getCheckpointFile(iteration-1)+".examples")
+        os.remove(filename)
+        print("removed " + filename)
+
     def loadTrainExamples(self):
         modelFile = os.path.join(self.args.load_folder_file[0], self.args.load_folder_file[1])
         examplesFile = modelFile+".examples"
