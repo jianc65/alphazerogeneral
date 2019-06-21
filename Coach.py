@@ -150,7 +150,8 @@ class Coach():
         if not os.path.exists(folder):
             return
         filename = os.path.join(folder, self.getCheckpointFile(iteration-1)+".examples")
-        os.remove(filename)
+        if os.path.exists(filename):
+                os.remove(filename)
         print("removed " + filename)
 
     def loadTrainExamples(self):
