@@ -12,7 +12,7 @@ from NeuralNet import NeuralNet
 
 import tensorflow as tf
 from .GobangNNet import GobangNNet as onnet
-
+from ModelUploader import ModelUploader
 args = dotdict({
     'lr': 0.001,
     'dropout': 0.3,
@@ -26,7 +26,7 @@ class NNetWrapper(NeuralNet):
         self.nnet = onnet(game, args)
         self.board_x, self.board_y = game.getBoardSize()
         self.action_size = game.getActionSize()
-
+        self.mu = ModelUploader()
         self.sess = tf.Session(graph=self.nnet.graph)
         self.saver = None
         with tf.Session() as temp_sess:
@@ -113,6 +113,9 @@ class NNetWrapper(NeuralNet):
             self.saver = tf.train.Saver(self.nnet.graph.get_collection('variables'))
         with self.nnet.graph.as_default():
             self.saver.save(self.sess, filepath)
+            print("Starting upload" + filepath)
+            self.mu.upload(filepath, filename)
+            print("Saved Model: ", filename)
 
     def load_checkpoint(self, folder='checkpoint', filename='checkpoint.pth.tar'):
         filepath = os.path.join(folder, filename)
