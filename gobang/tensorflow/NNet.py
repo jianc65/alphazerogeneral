@@ -116,6 +116,7 @@ class NNetWrapper(NeuralNet):
             print("Starting upload" + filepath)
             self.mu.upload(filepath+".meta", filename+".meta")
             self.mu.upload(filepath+".index", filename+".index")
+            self.mu.upload(filepath+".data-00000-of-00001", filename+".data-00000-of-00001")
             print("Saved Model: ", filename)
 
     def load_checkpoint(self, folder='checkpoint', filename='checkpoint.pth.tar'):
